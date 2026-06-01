@@ -17,14 +17,14 @@ const serif = EB_Garamond({
 
 export const metadata: Metadata = {
   title: "CS Policy RAG",
-  description: "한국 소비자 상담 정책 기반 고객지원 RAG MVP",
+  description: "한국 소비자 상담 표준답변 데이터 기반 고객지원 RAG MVP",
 };
 
 const navItems = [
-  { href: "/chat", label: "RAG 상담" },
+  { href: "/chat", label: "상담" },
   { href: "/dataset", label: "데이터셋" },
-  { href: "/admin", label: "관리자" },
-  { href: "/graph", label: "GraphRAG" },
+  { href: "/admin", label: "운영" },
+  { href: "/graph", label: "구현 구조" },
 ];
 
 export default function RootLayout({
@@ -51,7 +51,7 @@ export default function RootLayout({
               href="/chat"
               className="pill bg-[#292524] px-5 py-2.5 text-[15px] font-medium leading-none text-white"
             >
-              데모 시작
+              상담 시작
             </Link>
           </div>
         </header>

@@ -1,5 +1,11 @@
 # CS Policy RAG
 
+## 배포 주소
+
+- Production: https://cs-policy-rag.vercel.app
+- Dataset: https://cs-policy-rag.vercel.app/dataset
+- 구현 구조: https://cs-policy-rag.vercel.app/graph
+
 한국 소비자 상담 정책과 공개형 상담 사례를 기반으로 고객지원 답변을 생성하는 B2B SaaS 스타일 RAG MVP입니다.
 
 ## 왜 만들었나

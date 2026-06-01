@@ -8,14 +8,14 @@ const features = [
   "프롬프트 인젝션 차단",
   "관리자 상담 로그",
   "OpenSearch 확장 구조",
-  "Neo4j GraphRAG 확장 구조",
+  "Neo4j 확장 가능 구조",
 ];
 
 const ctas = [
   { href: "/chat", label: "데모 시작하기" },
   { href: "/admin", label: "관리자 대시보드" },
   { href: "/dataset", label: "데이터셋 보기" },
-  { href: "/graph", label: "그래프 보기" },
+  { href: "/graph", label: "구현 구조 보기" },
 ];
 
 export default function Home() {
