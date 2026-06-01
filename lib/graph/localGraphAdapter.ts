@@ -24,7 +24,7 @@ export function buildLocalGraph(query: string, cases: ConsumerCase[]) {
   const nodes: GraphNode[] = [
     { id: "q", label: query, group: "question" },
     { id: "d", label: disputeLabels[dispute], group: "dispute" },
-    { id: "i", label: top?.item ?? "품목 추가 확인", group: "item" },
+    { id: "i", label: top?.item || top?.category || "품목 추가 확인", group: "item" },
     ...terms.map((term, index) => ({ id: `t${index}`, label: term.term, group: "term" as const })),
     ...retrieved.map((entry) => ({ id: entry.case.id, label: `${entry.case.id} ${entry.case.disputeType}`, group: "case" as const })),
   ];
@@ -33,7 +33,11 @@ export function buildLocalGraph(query: string, cases: ConsumerCase[]) {
     { from: "q", to: "d", label: "분류" },
     { from: "d", to: "i", label: "품목" },
     ...terms.map((_, index) => ({ from: "i", to: `t${index}`, label: "정책 용어" })),
-    ...retrieved.map((entry, index) => ({ from: terms[0] ? "t0" : "i", to: entry.case.id, label: index === 0 ? "최상위 근거" : "유사 근거" })),
+    ...retrieved.map((entry, index) => ({
+      from: terms[0] ? "t0" : "i",
+      to: entry.case.id,
+      label: index === 0 ? "최상위 근거" : "유사 근거",
+    })),
   ];
 
   return { nodes, edges, retrieved };
