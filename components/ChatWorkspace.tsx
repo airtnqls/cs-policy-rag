@@ -86,7 +86,7 @@ export function ChatWorkspace({ cases }: { cases: ConsumerCase[] }) {
               <button
                 key={question}
                 onClick={() => ask(question)}
-                className="w-full rounded-xl border border-hairline bg-white px-3 py-2 text-left text-sm leading-6 text-body hover:border-[#292524]"
+                className="w-full rounded-lg border border-hairline bg-white px-3 py-2 text-left text-sm leading-6 text-body hover:border-[#292524]"
               >
                 {question}
               </button>
@@ -96,11 +96,12 @@ export function ChatWorkspace({ cases }: { cases: ConsumerCase[] }) {
       </aside>
 
       <main className="space-y-5">
+        <AnswerCard answer={response?.answer ?? null} query={response?.originalQuery ?? query} safety={response?.safety ?? null} loading={loading} />
         <QueryInput value={query} onChange={setQuery} onSubmit={ask} loading={loading} />
         {error ? <p className="rounded-xl bg-red-50 p-4 text-sm text-red-700">{error}</p> : null}
-        <SafetyPanel safety={response?.safety ?? null} />
-        <AnswerCard answer={response?.answer ?? null} />
+        {response ? <SafetyPanel safety={response.safety} /> : null}
 
+        {response ? (
         <section>
           <div className="mb-3 flex flex-col justify-between gap-1 md:flex-row md:items-end">
             <div>
@@ -116,6 +117,7 @@ export function ChatWorkspace({ cases }: { cases: ConsumerCase[] }) {
             ))}
           </div>
         </section>
+        ) : null}
       </main>
     </div>
   );
