@@ -85,7 +85,9 @@ export function ChatWorkspace({ cases }: { cases: ConsumerCase[] }) {
             {sampleQuestions.map((question) => (
               <button
                 key={question}
+                type="button"
                 onClick={() => ask(question)}
+                disabled={loading}
                 className="w-full rounded-lg border border-hairline bg-white px-3 py-2 text-left text-sm leading-6 text-body hover:border-[#292524]"
               >
                 {question}

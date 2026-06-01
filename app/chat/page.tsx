@@ -1,7 +1,15 @@
 import { ChatWorkspace } from "@/components/ChatWorkspace";
 import { loadConsumerCases } from "@/lib/data/loadConsumerCases";
+import { headers } from "next/headers";
+import { redirect } from "next/navigation";
 
-export default function ChatPage() {
+export default async function ChatPage() {
+  const host = (await headers()).get("host") ?? "";
+  if (host.startsWith("127.0.0.1")) {
+    const port = host.split(":")[1] ?? "3000";
+    redirect(`http://localhost:${port}/chat`);
+  }
+
   const { cases, usingFallback, sourceLabel, recordCount } = loadConsumerCases();
 
   return (
