@@ -72,6 +72,39 @@ function findValue(row: Record<string, unknown>, aliases: string[]) {
   return String(fuzzy?.[1] ?? "").trim();
 }
 
+function normalizeDisputeCategory(segment: string) {
+  const value = segment.trim();
+  if (!value) return "";
+  if (value.startsWith("청약철회")) return "청약철회";
+  if (value.startsWith("품질")) return "품질";
+  if (value.startsWith("계약해제") || value.startsWith("계약해지")) return "계약해제·해지";
+  if (value.startsWith("계약취소")) return "계약취소";
+  if (value.startsWith("계약불이행")) return "계약불이행";
+  if (value.startsWith("가격") || value.startsWith("요금")) return "가격·요금";
+  if (value.startsWith("부당행위")) return "부당행위";
+  if (value.startsWith("표시") || value.startsWith("광고")) return "표시·광고";
+  if (value.startsWith("약관")) return "약관";
+  if (value.startsWith("AS")) return "AS불만";
+  if (value.startsWith("안전")) return "안전";
+  if (value.startsWith("세탁서비스")) return "세탁서비스";
+  if (value.includes("사업자 귀책") || value.includes("사업자귀책")) return "사업자 귀책";
+  if (value.includes("소비자 귀책") || value.includes("소비자귀책")) return "소비자 귀책";
+  return "";
+}
+
+function deriveCategory(row: Record<string, unknown>, item: string, disputeType: string) {
+  const explicitCategory = findValue(row, columnAliases.category);
+  if (explicitCategory && explicitCategory !== item) return explicitCategory;
+
+  const disputeCategory = disputeType
+    .split("_")
+    .map(normalizeDisputeCategory)
+    .find(Boolean);
+  if (disputeCategory) return disputeCategory;
+
+  return "미분류";
+}
+
 function looksBroken(text: string) {
   const replacementCount = (text.match(/\uFFFD/g) ?? []).length;
   const hangulCount = (text.match(/[가-힣]/g) ?? []).length;
@@ -101,8 +134,8 @@ function extractKeywords(text: string) {
 function normalizeRows(rows: Array<Record<string, unknown>>): ConsumerCase[] {
   return rows.flatMap((row, index) => {
     const item = findValue(row, columnAliases.item);
-    const category = findValue(row, columnAliases.category) || item || "미분류";
     const disputeType = findValue(row, columnAliases.disputeType) || "unknown";
+    const category = deriveCategory(row, item, disputeType);
     const question = findValue(row, columnAliases.question);
     const answer = findValue(row, columnAliases.answer);
     const source = findValue(row, columnAliases.source) || "한국소비자원_소비자상담 표준답변";

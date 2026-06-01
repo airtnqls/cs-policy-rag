@@ -29,7 +29,7 @@ export function DatasetTable({ cases }: { cases: ConsumerCase[] }) {
           placeholder="질문, 답변, 품목 검색"
         />
         <select value={category} onChange={(event) => setCategory(event.target.value)} className="rounded-lg border border-[#d6d3d1] bg-white px-4 py-3 text-sm">
-          <option value="all">전체 카테고리</option>
+          <option value="all">전체 분쟁 분류</option>
           {categories.map((value) => (
             <option key={value} value={value}>
               {value}
@@ -50,7 +50,7 @@ export function DatasetTable({ cases }: { cases: ConsumerCase[] }) {
           <thead className="bg-canvas-soft text-xs uppercase text-muted">
             <tr>
               <th className="px-4 py-3">ID</th>
-              <th className="px-4 py-3">분류</th>
+              <th className="px-4 py-3">분쟁 분류</th>
               <th className="px-4 py-3">품목</th>
               <th className="px-4 py-3">질문 미리보기</th>
               <th className="px-4 py-3">답변 미리보기</th>
